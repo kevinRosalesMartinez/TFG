@@ -1,0 +1,54 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="navbar">
+	<div class="container">
+		<div class="navbar-header">
+
+			<a class="navbar-brand" th:href="@{/inicio}">Club Basket Massamagrell</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/inicio}">Inicio</a></li>
+				<li><a th:href="@{/club}">Club</a></li>
+				<li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown">Equipos<span class="caret"></span><span
+						style="font-size: 16px;"
+						class="pull-right hidden-xs showopacity"></span></a>
+					<ul class="dropdown-menu forAnimate">
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 1)}">Senior</a></li>
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 2)}">Junior</a></li>
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 3)}">Cadete</a></li>
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 4)}">Infantil</a></li>
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 5)}">Alevin</a></li>
+						<li><a
+							th:href="@{/verequipos/categorias/{categoria}(categoria = 6)}">Benjamin</a></li>
+					</ul></li>
+				<li sec:authorize="isAnonymous"><ul
+						class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a th:href="@{/login}">Login</a>
+					</ul></li>
+				<li sec:authorize="isAnonymous"><ul
+						class="nav navbar-nav navbar-right">
+						<li class="dropdown"><a th:href="@{/persona/registro}">Registro</a>
+					</ul></li>
+				<li class="dropdown" sec:authorize="isAuthenticated()"><a
+					href="#" class="dropdown-toggle" data-toggle="dropdown"
+					th:text="${#authentication.name}">Menu <span class="caret"></span><span
+						style="font-size: 16px;"
+						class="pull-right hidden-xs showopacity glyphicon glyphicon-chevron-down"></span>
+				</a>
+					<ul sec:authorize="isAuthenticated()"
+						class="dropdown-menu forAnimate" role="menu">
+						<li><a
+							href="javascript:document.getElementById('logoutForm').submit()">Salir</a>
+						</li>
+					</ul></li>
+				<form th:action="@{/logout}" method="POST" id="logoutForm"></form>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+</nav>

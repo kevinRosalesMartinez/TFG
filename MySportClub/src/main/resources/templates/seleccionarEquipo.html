@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Equipos</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>CLUB DEPORTIVO MASSAMAGRELL</h1>
+			<form class="form-horizontal" method="post" action="#"
+				th:action="@{/equipo/detalleEquipo}" th:object="${equipo}">
+				<fieldset>
+
+					<!-- Form Name -->
+					<legend>EQUIPO</legend>
+					<!-- Text input-->
+
+					<!-- Select-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="equipo">Equipos</label>
+						<div class="col-md-4">
+							<select class="form-control" th:field="*{id}">
+								<option th:each="equipo:${listaequipos}" th:value="${equipo.id}"
+									th:text="${equipo.nombre}" />
+							</select>
+						</div>
+					</div>
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="registrarse"></label>
+						<div class="col-md-4">
+							<button th:if="${listaequipos} == 'null' ? 'disabled':_" id="buscar" name="buscar" class="btn btn-primary">Buscar</button>
+						</div>
+					</div>
+				</fieldset>
+				<br>
+			</form>
+		</div>
+
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

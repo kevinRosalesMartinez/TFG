@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Pagina de Registro</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/css/starter-template.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>CLUB DEPORTIVO MASSAMAGRELL</h1>
+			<form class="form-horizontal" method="post" action="#"
+				th:action="@{/persona/registro/submit}"
+				th:object="${personaRegistro}">
+				<fieldset>
+
+					<!-- Form Name -->
+					<legend>Registro</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="nombre">Nombre</label>
+						<div class="col-md-4">
+							<input id="nombre" name="nombre" type="text"
+								class="form-control input-md" th:field="*{nombre}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="apellidos">Apellidos</label>
+						<div class="col-md-4">
+							<input id="apellidos" name="apellidos" type="text" placeholder=""
+								class="form-control input-md" th:field="*{apellidos}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="dni">DNI</label>
+						<div class="col-md-4">
+							<input id="dni" name="dni" type="text" placeholder=""
+								class="form-control input-md" th:field="*{dni}"><small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></small>
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="email">Email</label>
+						<div class="col-md-4">
+							<input id="email" name="email" type="text" placeholder=""
+								class="form-control input-md" th:field="*{email}"><small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="telefono">Telefono</label>
+						<div class="col-md-4">
+							<input id="telefono" name="telefono" type="text" placeholder=""
+								class="form-control input-md" th:field="*{telefono}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="fechanacimiento">Fecha
+							de nacimiento</label>
+						<div class="col-md-4">
+							<input id="fechanacimiento" name="fechanacimiento" type="date"
+								placeholder="" class="form-control input-md"
+								th:field="*{fechanacimiento}">
+						</div>
+					</div>
+
+					<!--Text input -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="username">Usuario</label>
+						<div class="col-md-4">
+							<input id="username" name="username" type="text" placeholder=""
+								class="form-control input-md">
+						</div>
+					</div>
+
+					<!--Password input -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="password">Contraseña</label>
+						<div class="col-md-4">
+							<input id="password" name="password" type="password"
+								placeholder="" class="form-control input-md">
+						</div>
+					</div>
+
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="registrarse"></label>
+						<div class="col-md-4">
+							<button id="registrarse" name="registrarse"
+								class="btn btn-primary">Registrarse</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+	</div>
+	<!-- /.container -->
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

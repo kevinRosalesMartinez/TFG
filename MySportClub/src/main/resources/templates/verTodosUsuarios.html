@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>Listado de usuarios registrados</h1>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nombre de Usuario</th>
+						<th scope="col">Rol</th>
+						<th scope="col">Action</th>
+				</thead>
+				<tbody>
+					<tr th:each="usuario : ${listausuarios}">
+						<td th:text="${usuario.username}"></td>
+						<td th:text="${usuario.rol}"></td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<div class="bnt-group">
+								<a class="btn btn-primary glyphicon glyphicon-edit" id="editBtn"
+									th:style="${usuario.username} == 'admin' ? 'display:none' : 'display:inline'"
+									th:href="@{/persona/{username}(username = ${usuario.username})}"></a>
+
+								<a class="btn btn-danger glyphicon glyphicon-remove"
+									id="deleteBtn"
+									th:style="${usuario.username} == 'admin' ? 'display:none' : 'display:inline'"
+									th:href="@{/user/eliminar/{id}(id = ${usuario.id})}"></a>
+							</div>
+						</td>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

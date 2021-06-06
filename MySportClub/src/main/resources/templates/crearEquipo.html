@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>CLUB DEPORTIVO MASSAMAGRELL</h1>
+			<form class="form-horizontal" method="post" action="#"
+				th:action="@{/equipo/nuevoequipo/submit}" th:object="${nuevoequipo}">
+				<fieldset>
+
+					<!-- Form Name -->
+					<legend>NUEVO EQUIPO</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="nombre">Nombre</label>
+						<div class="col-md-4">
+							<input id="nombre" name="nombre" type="text"
+								class="form-control input-md" th:field="*{nombre}"> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+						</div>
+					</div>
+
+					<!-- Select-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="equipo">Categoria</label>
+						<div class="col-md-4">
+							<select class="form-control" th:field="*{categoria}">
+								<option th:each="categoria:${listacategorias}"
+									th:value="${categoria.id}" th:text="${categoria.nombre}" />
+							</select>
+						</div>
+					</div>
+
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="registrarse"></label>
+						<div class="col-md-4">
+							<button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

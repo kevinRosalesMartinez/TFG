@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<form class="form-horizontal" method="post" th:action="@{/login}">
+				<fieldset>
+
+					<!-- Form Name -->
+					<legend>Inicio de sesion</legend>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="username">Nombre
+							de usuario</label>
+						<div class="col-md-4">
+							<input id="username" name="username" type="text" placeholder=""
+								class="form-control input-md">
+
+						</div>
+					</div>
+
+					<!-- Password input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="password">Contraseña</label>
+						<div class="col-md-4">
+							<input id="password" name="password" type="password"
+								placeholder="" class="form-control input-md">
+
+						</div>
+					</div>
+
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for=""></label>
+						<div class="col-md-4">
+							<input type="submit" value="Entrar" id="btnEntrar" name=""
+								class="btn btn-primary"></input>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+		<div class="starter-template">
+			<div>
+				<form th:action="@{/entrenamiento/verEntrenamientosCategoria}"
+					th:object="${categoria}" method="post">
+					<div class="form-group">
+						<div class="col-md-3">
+							<select class="form-control" th:field="*{id}">
+								<option id="CategoriaSearch"
+									th:each="categorias:${listacategorias}"
+									th:value="${categorias.id}" th:text="${categorias.nombre}" />
+							</select>
+						</div>
+						<button type="submit" class="btn btn-success">Buscar</button>
+					</div>
+				</form>
+				<br>
+				<hr style="width: 75%;">
+				<br> <br>
+				<table class="table table-striped">
+					<tbody>
+						<tr>
+							<th scope="col" th:text="#{tabla.nombre.equipo}">Equipo</th>
+							<th scope="col" th:text="#{tabla.nombre.fechaentrenamientos}">Fecha
+								Entrenamiento</th>
+							<th scope="col" sec:authorize="hasRole('ROLE_ADMIN')"
+								th:text="#{tabla.nombre.accion}">Action</th>
+						</tr>
+						<tr th:each="equipo:${listaequipos}">
+							<td th:text="${equipo.nombre}"></td>
+							<td><span
+								th:each="entrenamiento:${equipo.getEntrenamientosLista()}"><span
+									th:text="${entrenamiento.formatoFecha()}"></span><br></span></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')">
+								<div class="bnt-group">
+									<a class="btn btn-success glyphicon glyphicon-pencil"
+										id="newBtn"
+										th:href="@{/entrenamiento/nuevoEntrenamiento/{id}(id = ${equipo.id})}"></a>
+
+									<a class="btn btn-primary glyphicon glyphicon-edit"
+										id="editBtn" th:href="@{/equipo/{id}(id = ${equipo.id})}"></a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>

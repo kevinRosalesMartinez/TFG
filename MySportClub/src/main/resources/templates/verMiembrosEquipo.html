@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+	<div class="container">
+
+		<div class="starter-template">
+
+			<form class="form-horizontal" method="post" action="#"
+				th:action="@{/equipo/agregarmiembros}" th:object="${equipo}">
+
+				<!-- ID EQUIPO-->
+				<div style="display: none" class="form-group">
+					<label class="col-md-4 control-label" for="nombre">ID</label>
+					<div class="col-md-4">
+						<input id="id" name="id" type="text" class="form-control input-md"
+							th:value="*{id}">
+					</div>
+				</div>
+
+				<!-- Form Name -->
+				<legend th:text="${equipo.nombre.toUpperCase()}">EQUIPO</legend>
+
+				<div class="form-group" sec:authorize="!hasRole('ROLE_JUGADOR')">
+					<label class="col-md-4 control-label" for="registrarse"></label>
+					<div class="col-md-4">
+						<button id="agregarmiembros" name="agregarmiembros"
+							class="btn btn-success">Añadir miembro</button>
+					</div>
+				</div>
+			</form>
+			<fieldset>
+
+				<!-- Para poder pasar el id del equipo -->
+				<div class="form-group" style="display: none">
+					<input id="equipoID" name="equipoID" type="text"
+						class="form-control input-md" th:value="${equipo.id}">
+				</div>
+
+				<h1>ENTRENADOR/ES</h1>
+				<br>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Apellidos</th>
+							<th scope="col">Rango</th>
+							<th sec:authorize="!hasRole('ROLE_JUGADOR')" scope="col">Action</th>
+					</thead>
+					<tbody>
+						<tr th:each="entrenador : ${listaentrenadores}">
+							<td th:text="${entrenador.getNombre()}"></td>
+							<td th:text="${entrenador.getApellidos()}"></td>
+							<td th:text="${entrenador.getUser().getRol()}"></td>
+							<td sec:authorize="!hasRole('ROLE_JUGADOR')">
+								<div class="bnt-group">
+									<a class="btn btn-danger glyphicon glyphicon-remove"
+										id="expulsarDelEquipo"
+										th:href="@{/equipo/expulsarpersona/{id}(id = ${entrenador.id})}"></a>
+								</div>
+							</td>
+					</tbody>
+				</table>
+				<br>
+				<hr style="width: 75%;">
+				<h1>JUGADORES</h1>
+				<br>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Apellidos</th>
+							<th sec:authorize="!hasRole('ROLE_JUGADOR')" scope="col">Fecha
+								Nacimiento</th>
+					</thead>
+					<tbody>
+						<tr th:each="jugador : ${listajugadores}">
+							<td th:text="${jugador.getNombre()}"></td>
+							<td th:text="${jugador.getApellidos()}"></td>
+							<td th:text="${jugador.formatoFecha()}"></td>
+							<td sec:authorize="!hasRole('ROLE_JUGADOR')">
+								<div class="bnt-group">
+									<a class="btn btn-danger glyphicon glyphicon-remove"
+										id="expulsarDelEquipo2"
+										th:href="@{/equipo/expulsarpersona/{id}(id = ${jugador.id})}"></a>
+								</div>
+							</td>
+					</tbody>
+				</table>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="registrarse"></label>
+					<div class="col-md-4">
+						<a id="btnAtras" name="cancelar" class="btn btn-warning"
+							th:href="@{/equipo/verequipos}">Ir Atrás</a>
+					</div>
+				</div>
+			</fieldset>
+
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

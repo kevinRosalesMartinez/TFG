@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Club Massamagrell</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+		<div class="starter-template">
+
+			<div id="page-photo">
+				<img th:src="@{/images/clubfoto.png}" alt="..."
+					class="img-thumbnail" height="auto" width="auto">
+			</div>
+			<h1>Club Basket Massamagrell</h1>
+			<div id="textoClub"></div>
+
+			<p>El Club Basket Massamagrell fue fundado en 1976. En la
+				actualidad nos encontramos en un momento de expansión, gracias al
+				ánimo y entrega de un grupo de gente (directiva, entrenadores,
+				jugadores, afición), de nuestros patrocinadores y de la aceptación
+				que nuestro Club tiene en la comarca de L’Horta y en Valencia. El
+				Club se ha convertido en una de las cantera referencia en la
+				Comunidad Valenciana. Jugadores de nuestro Club han sido convocados
+				para formar parte de las distintas selecciones autonómicas.</p>
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

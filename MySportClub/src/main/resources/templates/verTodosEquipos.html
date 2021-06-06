@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>Lista de todos los Equipos</h1>
+			<a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link float-right" th:href="@{/equipo/export/pdf}">
+				<img class="img-responsive center-box" th:src="@{/images/pdf.png}"
+				height="auto">
+			</a>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nombre del Equipo</th>
+						<th scope="col">Categoria</th>
+						<th scope="col" sec:authorize="hasRole('ROLE_ADMIN')"
+							th:text="#{tabla.nombre.accion}">Action</th>
+				</thead>
+				<tbody>
+					<tr th:each="equipo : ${listaequipos}">
+						<td th:text="${equipo.nombre}"></td>
+						<td th:text="${equipo.getCategoria().getNombre()}"></td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<div class="bnt-group">
+								<a class="btn btn-primary glyphicon glyphicon-edit" id="editBtn"
+									th:href="@{/equipo/{id}(id = ${equipo.id})}"></a> <a
+									class="btn btn-danger glyphicon glyphicon-remove"
+									id="deleteBtn"
+									th:href="@{/equipo/eliminar/{id}(id = ${equipo.id})}"></a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

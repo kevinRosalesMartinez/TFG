@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>AÑADIR MIEMBRO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" >
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+	<div class="container">
+
+		<div class="starter-template"></div>
+
+		<form class="form-horizontal" method="post" action="#"
+			th:action="@{/equipo/agregarmiembros/submit}" th:object="${equipo}">
+			<fieldset>
+
+				<!-- ID EQUIPO-->
+				<div style="display: none" class="form-group">
+					<label class="col-md-4 control-label" for="nombre">ID</label>
+					<div class="col-md-4">
+						<input id="id" name="id" type="text" class="form-control input-md"
+							th:value="*{id}">
+					</div>
+				</div>
+
+				<!-- Form Name -->
+				<legend>AÑADIR MIEMBRO</legend>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Tipo</th>
+							<th scope="col">Fecha Nacimiento</th>
+							<th scope="col">Selecciona</th>
+					</thead>
+					<tbody>
+						<tr th:each="persona : ${listasinequipo}">
+							<td th:text="${persona.getNombre()}"></td>
+							<td th:text="${persona.user.rol}"></td>
+							<td th:text="${persona.formatoFecha()}"></td>
+							<td><input type="checkbox" name="agregar"
+								th:value="${persona.id}" id="check" class="checkmark"></td>
+					</tbody>
+				</table>
+
+			</fieldset>
+			<!-- Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="registrarse"></label>
+				<div class="col-md-4">
+					<button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+					<a id="btnAtras" name="cancelar" class="btn btn-warning"
+						th:href="@{/equipo/verequipos}">Cancelar</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

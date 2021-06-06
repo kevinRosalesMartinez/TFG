@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+	<div class="container">
+
+		<div class="starter-template">
+
+				<!-- Form Name -->
+				<h1 th:text="${equipo.nombre.toUpperCase()}">EQUIPO</h1>
+
+			<hr style="width: 75%;">
+			<h2>PARTIDOS</h2>
+			<br>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Fecha del partido</th>
+						<th scope="col">Rival</th>
+				</thead>
+				<tbody>
+					<tr th:each="partido : ${equipo.getPartidosLista()}">
+						<td th:text="${partido.formatoFecha()}"></td>
+						<td th:text="${partido.rival}"></td>
+	
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

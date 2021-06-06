@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>TITULO</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<nav th:replace="/fragment/navbar.html :: navbar"></nav>
+	<nav sec:authorize="isAuthenticated()"
+		th:replace="/fragment/menuLateral.html :: menulateral"></nav>
+
+	<div class="container">
+
+		<div class="starter-template">
+			<h1>CLUB DEPORTIVO MASSAMAGRELL</h1>
+			<form class="form-horizontal" method="post" action="#"
+				th:action="@{/partido/editarPartido/submit}" th:object="${partido}">
+				<fieldset>
+					<!-- Form Name -->
+					<legend>EDITAR PARTIDO</legend>
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="nombre">Nombre</label>
+						<div class="col-md-4">
+							<input disabled id="nombre" name="nombre" type="text"
+								class="form-control input-md" th:value="${equipo.nombre}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="equipo">Categoria</label>
+						<div class="col-md-4">
+							<input disabled id="categoria" name="categoria" type="text"
+								class="form-control input-md"
+								th:field="${equipo.categoria.nombre}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div style="display: none" class="form-group">
+						<label class="col-md-4 control-label" for="idpartido">ID </label>
+						<div class="col-md-4">
+							<input id="idpartido" name="" type="text" placeholder=""
+								class="form-control input-md" th:field="*{id}">
+						</div>
+					</div>
+					<!-- Para poder pasar el id del equipo -->
+					<div class="form-group" style="display: none">
+						<input id="equipoID" name="equipoID" type="text"
+							class="form-control input-md" th:value="${equipo.id}">
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="fechapartido">Fecha
+							Partido</label>
+						<div class="col-md-4">
+							<input id="fechapartido" name="" type="date" placeholder=""
+								class="form-control input-md" th:field="*{fechapartido}">
+						</div>
+					</div>
+
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="rival">Rival</label>
+						<div class="col-md-4">
+							<input id="rival" name="" type="text" placeholder=""
+								class="form-control input-md" th:field="*{rival}">
+						</div>
+					</div>
+
+					<!-- Button -->
+					<div class="form-group">
+						<label class="col-md-4 control-label" for="registrarse"></label>
+						<div class="col-md-4">
+							<button id="guardar" name="guardar" class="btn btn-primary">Guardar</button>
+						</div>
+					</div>
+
+				</fieldset>
+			</form>
+
+			<a id="btnAtras" name="cancelar" class="btn btn-warning"
+				th:href="@{/equipo/verequipos}">Cancelar</a>
+		</div>
+	</div>
+
+	<!-- /.container -->
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="/webjars/jquery/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
